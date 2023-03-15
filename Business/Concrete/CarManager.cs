@@ -46,7 +46,7 @@ namespace Business.Concrete
             throw new Exception();
         }
 
-        public List<Car> GetById(int id)
+        public Car GetById(int id)
         {
             return _carDal.GetById(id);
         }
