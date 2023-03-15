@@ -20,11 +20,21 @@ namespace ConsoleUI
 
             foreach (var car in carManager.GetAll())
             {
-                Console.WriteLine($"{car.Id} - {car.Description}");
+                Console.WriteLine($"{car.Id} - {car.Description} - {car.ColorId}");
             }
 
             //ID'si 1 olan aracın açıklamasını yazdırır.
             Console.WriteLine(carManager.GetById(1).Description);
+
+            Console.WriteLine("\n-----------------------------------------\n");
+            var car1 = new Car { BrandId = 9, ColorId = 3, Id = 6, DailyPrice = 1000, ModelYear = 2023, Description = "Bugatti Chiron" };
+            
+            carManager.Update(car1);
+
+            foreach (var car in carManager.GetAll())
+            {
+                Console.WriteLine($"{car.Id} - {car.Description} - {car.ColorId}");
+            }
         }
     }
 }

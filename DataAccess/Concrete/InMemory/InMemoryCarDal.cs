@@ -46,7 +46,12 @@ namespace DataAccess.Concrete.InMemory
         {
             //Nesnenin adresini döndürdüğü için doğruddan atama yaparsam kendisi de değişir.
             Car carToUpdate = _cars.SingleOrDefault(c => c.Id == car.Id);
-            carToUpdate = car;
+            carToUpdate.Id = car.Id;
+            carToUpdate.BrandId = car.BrandId;
+            carToUpdate.ColorId = car.ColorId;
+            carToUpdate.DailyPrice = car.DailyPrice;
+            carToUpdate.Description = car.Description;
+            carToUpdate.ModelYear = car.ModelYear;
         }
     }
 }
