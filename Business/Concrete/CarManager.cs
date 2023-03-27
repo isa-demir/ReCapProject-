@@ -18,13 +18,13 @@ namespace Business.Concrete
         }
         public void Add(Car car)
         {
-            if (car.Id > 1 && car.BrandId > 1 && car.ColorId > 1)
+            if (SaveControl(car))
             {
                 _carDal.Add(car);
             }
             else
             {
-                Console.WriteLine("Lütfen girilen ID değerlerini kontrol ediniz.");
+                Console.WriteLine("Model adı 2 karakterden fazla olmalı veya günlük fiyat 0'dan büyük olmalıdır.");
             }
         }
 
@@ -48,19 +48,38 @@ namespace Business.Concrete
 
         public Car GetById(int id)
         {
-            return _carDal.GetById(id);
+            return _carDal.Get(p=>p.Id == id);
+        }
+
+        public List<Car> GetCarsByBrandId(int id)
+        {
+            return _carDal.GetAll(p => p.BrandId == id);
+        }
+
+        public List<Car> GetCarsByColorId(int id)
+        {
+            return _carDal.GetAll(p => p.ColorId == id);
         }
 
         public void Update(Car car)
         {
-            if (car.Id > 1 && car.BrandId > 1 && car.ColorId > 1)
+            if (SaveControl(car))
             {
                 _carDal.Update(car);
             }
             else
             {
-                Console.WriteLine("Lütfen girilen ID değerlerini kontrol ediniz.");
+                Console.WriteLine("Model adı 2 karakterden fazla olmalı veya günlük fiyat 0'dan büyük olmalıdır.");
             }
+        }
+
+        private bool SaveControl(Car car)
+        {
+            if (car.Model.Length >= 2 && car.DailyPrice > 0)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

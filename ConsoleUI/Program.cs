@@ -1,8 +1,10 @@
 ﻿using Business.Concrete;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
 using System;
+using System.Collections.Generic;
 
 namespace ConsoleUI
 {
@@ -11,30 +13,59 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             //dataacces erişim nesnesi
-            ICarDal carDal = new InMemoryCarDal();
+            var carDal = new EfCarDal();
 
             //Varlığımız üzerinde işlemleri yapmamızı sağlayan nesnemiz.
             CarManager carManager = new CarManager(carDal);
 
-            carManager.Add(new Car { BrandId = 9, ColorId = 2, Id = 6, DailyPrice = 1000, ModelYear = 2023, Description = "Bugatti Chiron" });
+            Car car1 = new Car
+            {
+                Id = 1,
+                Model = "A3",
+                BrandId = 1,
+                ColorId = 1,
+                ModelYear = 2022,
+                DailyPrice = 350.50m,
+                Description = "Luxury compact sedan"
+            };
+
+            Car car2 = new Car
+            {
+                Id = 2,
+                Model = "S-Class",
+                BrandId = 2,
+                ColorId = 2,
+                ModelYear = 2021,
+                DailyPrice = 950.00m,
+                Description = "Luxury full-size sedan"
+            };
+
+            Car car3 = new Car
+            {
+                Id = 3,
+                Model = "Civic",
+                BrandId = 3,
+                ColorId = 3,
+                ModelYear = 2022,
+                DailyPrice = 200.00m,
+                Description = "Compact car"
+            };
+
+            List<Car> cars = new List<Car> { car1, car2, car3 };
+
+            foreach (var c in cars)
+            {
+                carManager.Add(c);
+            }
 
             foreach (var car in carManager.GetAll())
             {
-                Console.WriteLine($"{car.Id} - {car.Description} - {car.ColorId}");
+                Console.WriteLine(car.Id );
+                Console.WriteLine(car.Description);
+                Console.WriteLine(car.DailyPrice);
+                Console.WriteLine("------------------");
             }
 
-            //ID'si 1 olan aracın açıklamasını yazdırır.
-            Console.WriteLine(carManager.GetById(1).Description);
-
-            Console.WriteLine("\n-----------------------------------------\n");
-            var car1 = new Car { BrandId = 9, ColorId = 3, Id = 6, DailyPrice = 1000, ModelYear = 2023, Description = "Bugatti Chiron" };
-            
-            carManager.Update(car1);
-
-            foreach (var car in carManager.GetAll())
-            {
-                Console.WriteLine($"{car.Id} - {car.Description} - {car.ColorId}");
-            }
         }
     }
 }
