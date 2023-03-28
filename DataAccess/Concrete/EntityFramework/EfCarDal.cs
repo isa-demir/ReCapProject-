@@ -16,8 +16,9 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (RentCarContext context = new RentCarContext())
             {
-                var addedCar = context.Entry(entity);
-                addedCar.State = EntityState.Added;
+                //var addedCar = context.Entry(entity);
+                //addedCar.State = EntityState.Added;
+                context.Cars.Add(entity); //Yukarıdaki kodlara kıyasla daha basit.
                 _ = context.SaveChanges();
             }
         }
@@ -26,8 +27,8 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (RentCarContext context = new RentCarContext())
             {
-                var deletedCar = context.Entry(entity);
-                deletedCar.State = EntityState.Deleted;
+                var deletedCar = context.Cars.Find(entity.Id);
+                context.Cars.Remove(deletedCar);
                 _ = context.SaveChanges();
             }
         }
@@ -53,8 +54,9 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (RentCarContext context = new RentCarContext())
             {
-                var updatedCar = context.Entry(entity);
-                updatedCar.State = EntityState.Modified;
+                //var updatedCar = context.Entry(entity);
+                //updatedCar.State = EntityState.Modified;
+                context.Entry(entity).State = EntityState.Modified;
                 _ = context.SaveChanges();
             }
         }

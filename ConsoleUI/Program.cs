@@ -52,20 +52,23 @@ namespace ConsoleUI
             };
 
             List<Car> cars = new List<Car> { car1, car2, car3 };
+            //carManager.Add(car3);
 
-            foreach (var c in cars)
-            {
-                carManager.Add(c);
-            }
+            //foreach (var c in cars)
+            //{
+            //    carManager.Add(c);
+            //}
+
+            //carManager.Delete(car3);
 
             foreach (var car in carManager.GetAll())
             {
-                Console.WriteLine(car.Id );
+                Console.WriteLine(car.Id);
+                Console.WriteLine(car.Model);
                 Console.WriteLine(car.Description);
                 Console.WriteLine(car.DailyPrice);
                 Console.WriteLine("------------------");
             }
-
         }
     }
 }
