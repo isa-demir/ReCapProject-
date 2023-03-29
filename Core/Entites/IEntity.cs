@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
-namespace Entities.Abstract
+namespace Core.Entites
 {
-    //Bizim için veritabanı tablolarına karşılık geliyor.
     public interface IEntity
     {
+        
     }
 }
