@@ -1,5 +1,8 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using Entities.DTOs;
 using System;
@@ -17,65 +20,73 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
-        public void Add(Car car)
+        public IResult Add(Car car)
         {
             if (SaveControl(car))
             {
                 _carDal.Add(car);
+                return new SuccessResult(Messages.ProductAdded);
             }
             else
             {
-                Console.WriteLine("Model adı 2 karakterden fazla olmalı veya günlük fiyat 0'dan büyük olmalıdır.");
+                return new ErrorResult(Messages.ProductNameInvalid);
+                
             }
         }
 
-        public void Delete(Car car)
+        public IResult Delete(Car car)
         {
             //Mesela -> Bunu kullanacak kişi Admin mi? gibi kontroller yapılabilir.
             if (true)
             {
                 _carDal.Delete(car);
+                return new SuccessResult(Messages.ProductDeleted);
             }
         }
 
-        public List<Car> GetAll()
+        public IDataResult<List<Car>> GetAll()
         {
             if (_carDal.GetAll() != null)
             {
-                return _carDal.GetAll();
+                return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.ProductListed);
             }
-            throw new Exception();
+            else
+            {
+                return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
+            }
+            
         }
 
-        public Car GetById(int id)
+        public IDataResult<Car> GetById(int id)
         {
-            return _carDal.Get(p=>p.Id == id);
+            return new SuccessDataResult<Car>(_carDal.Get(p => p.Id == id));
         }
 
-        public List<CarDetailDto> GetCarDetails()
+        public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            return _carDal.GetCarDetails();
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
         }
 
-        public List<Car> GetCarsByBrandId(int id)
+        public IDataResult<List<Car>> GetCarsByBrandId(int id)
         {
-            return _carDal.GetAll(p => p.BrandId == id);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.BrandId == id));
         }
 
-        public List<Car> GetCarsByColorId(int id)
+        public IDataResult<List<Car>> GetCarsByColorId(int id)
         {
-            return _carDal.GetAll(p => p.ColorId == id);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.ColorId == id));
         }
 
-        public void Update(Car car)
+        public IResult Update(Car car)
         {
             if (SaveControl(car))
             {
                 _carDal.Update(car);
+                return new SuccessResult();
             }
             else
             {
-                Console.WriteLine("Model adı 2 karakterden fazla olmalı veya günlük fiyat 0'dan büyük olmalıdır.");
+                return new ErrorResult();
             }
         }
 

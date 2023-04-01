@@ -33,14 +33,14 @@ namespace ConsoleUI
             };
 
             //Araba ekleme yapılıyor!
-            carManager.Add(car);
+            //carManager.Add(car);
 
             //Tüm Arabalar Listeleniyor
             GetCarDetails(carManager);
 
             //Araba silme yapılıyor!
-            var deletedCar = carManager.GetById(2);
-            carManager.Delete(deletedCar);
+            //var deletedCar = carManager.GetById(2);
+            //carManager.Delete(deletedCar.Data);
 
             //Tüm Arabalar Listeleniyor
             GetCarDetails(carManager);
@@ -54,7 +54,7 @@ namespace ConsoleUI
 
             //Sadece tek bir araba getiriliyor!
             var wantedCar = carManager.GetById(4);
-            Console.WriteLine(wantedCar.Model + "/" + wantedCar.Description);
+            Console.WriteLine(wantedCar.Data.Model + "/" + wantedCar.Data.Description);
 
             //CarDetailDto işleminin yapıldığı metod.
             //GetCarDetails(carManager);
@@ -66,7 +66,7 @@ namespace ConsoleUI
             Console.WriteLine("\n---------------------------------------\n");
             var carDetails = carManager.GetCarDetails();
 
-            foreach (var car in carDetails)
+            foreach (var car in carDetails.Data)
             {
                 Console.WriteLine(car.BrandName + "/" + car.Model + " : " + car.ColorName + " -> " + car.DailyPrice);
             }
